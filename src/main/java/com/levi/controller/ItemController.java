@@ -2,7 +2,10 @@ package com.levi.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,8 @@ import com.levi.service.ItemService;
 import com.levi.service.PedidoService;
 import com.levi.service.ProdutoService;
 
+@Transactional
+@CrossOrigin("*")
 @RestController
 public class ItemController {
 	
