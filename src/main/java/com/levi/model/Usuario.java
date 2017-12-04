@@ -1,6 +1,5 @@
 package com.levi.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,40 +19,39 @@ public class Usuario extends User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idUsuario;
-	
+	private Integer idUsuario;
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 	@Column(name = "enabled")
 	private Boolean enabled;
-	
+
 	@Column(name = "CPF")
 	private String cpf;
-	
+
 	@Column(name = "email")
 	private String email;
-	
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name ="endereco")
-	private Endereco endereco;
-	
-	@OneToMany(cascade = {CascadeType.ALL})
-	@JoinColumn(name ="usuario")
-	private List<Pedido> pedidos;
-	
-	@OneToMany(cascade = {CascadeType.ALL})
-	@JoinColumn(name="ClientRoles_Id")
-	private List<Role> clientRoles = new ArrayList<Role>();
 
-	public int getIdUsuario() {
+	@OneToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "endereco")
+	private Endereco endereco;
+
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "usuario")
+	private List<Pedido> pedidos;
+
+	@Column(name = "role")
+	private String userRole;
+
+	public Integer getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
@@ -79,14 +77,6 @@ public class Usuario extends User {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	public List<Role> getClientRoles() {
-		return clientRoles;
-	}
-
-	public void setClientRoles(List<Role> clientRoles) {
-		this.clientRoles = clientRoles;
 	}
 
 	public String getCpf() {
@@ -120,7 +110,13 @@ public class Usuario extends User {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	
-	
-	
+
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+
 }

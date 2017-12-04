@@ -18,42 +18,42 @@ public class PedidoController {
 	@Autowired
 	private PedidoService pedidoService;
 	
-	@RequestMapping("/pedidos")
+	@RequestMapping("/api/pedidos")
 	public List<Pedido> getAllPedidos() {
 		return pedidoService.getPedidos();
 	}
 	
-	@RequestMapping("/pedidos/{idPedido}")
+	@RequestMapping("/api/pedidos/{idPedido}")
 	public Pedido getPedido(@PathVariable Integer idPedido) {
 		return pedidoService.getPedido(idPedido);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/pedidos")
+	@RequestMapping(method=RequestMethod.POST, value="/api/pedidos")
 	public void addPedido(@RequestBody Pedido pedido) {
 		pedidoService.addPedido(pedido);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/pedidos/{idPedido}")
+	@RequestMapping(method=RequestMethod.PUT, value="/api/pedidos/{idPedido}")
 	public void updatePedido(@RequestBody Pedido pedido, @PathVariable Integer idPedido) {
 		pedidoService.updatePedido(pedido);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="/pedidos/{idPedido}")
+	@RequestMapping(method=RequestMethod.DELETE,value="/api/pedidos/{idPedido}")
 	public void deletePedido(@PathVariable Integer idPedido) {
 		pedidoService.deletePedido(idPedido);
 	}
 	
-	@RequestMapping("/pedidosDoUsuario/{idUsuario}")
+	@RequestMapping("/api/pedidosDoUsuario/{idUsuario}")
 	public List<Pedido> getAllPedidosDoUsuario(@PathVariable Integer idUsuario) {
 		return pedidoService.getPedidosDoUsuario(idUsuario);
 	}
 	
-	@RequestMapping("/pedidoDoUsuario/{idPedido}")
+	@RequestMapping("/api/pedidoDoUsuario/{idPedido}")
 	public Pedido getAllPedidos(@PathVariable Integer idPedido) {
 		return pedidoService.getPedidoDoUsuario(idPedido);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/pedidos/{idUsuario}")
+	@RequestMapping(method=RequestMethod.POST, value="/api/pedidos/{idUsuario}")
 	public void addPedido(@RequestBody Pedido pedido, @PathVariable Integer idUsuario) {
 		pedidoService.addPedidoNoUsuario(idUsuario, pedido);
 	}

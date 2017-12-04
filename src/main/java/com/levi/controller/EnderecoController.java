@@ -18,27 +18,27 @@ public class EnderecoController {
 	@Autowired
 	private EnderecoService enderecoService;
 	
-	@RequestMapping("/enderecos")
+	@RequestMapping("/api/api/enderecos")
 	public List<Endereco> getAllEnderecos() {
 		return enderecoService.getEnderecos();
 	}
 	
-	@RequestMapping("/enderecos/{idEndereco}")
+	@RequestMapping("/api/enderecos/{idEndereco}")
 	public Endereco getEndereco(@PathVariable Integer idEndereco) {
 		return enderecoService.getEndereco(idEndereco);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/enderecos")
+	@RequestMapping(method=RequestMethod.POST, value="/api/enderecos")
 	public void addEndereco(@RequestBody Endereco endereco) {
 		enderecoService.addEndereco(endereco);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/enderecos/{idEndereco}")
+	@RequestMapping(method=RequestMethod.PUT, value="/api/enderecos/{idEndereco}")
 	public void updateEndereco(@RequestBody Endereco endereco, @PathVariable Integer idEndereco) {
 		enderecoService.updateEndereco(endereco);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="/enderecos/{idEndereco}")
+	@RequestMapping(method=RequestMethod.DELETE,value="/api/enderecos/{idEndereco}")
 	public void deleteEndereco(@PathVariable Integer idEndereco) {
 		enderecoService.deleteEndereco(idEndereco);
 	}

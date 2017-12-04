@@ -37,4 +37,8 @@ public class UsuarioService {
 	public void deleteUsuario(Integer idUsuario) {
 		usuarioRepository.delete(idUsuario);
 	}
+	
+	public Usuario login(String email, String senha){
+		return usuarioRepository.login(email, senha);
+	}
 }

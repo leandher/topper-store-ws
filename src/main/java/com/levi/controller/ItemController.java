@@ -26,57 +26,57 @@ public class ItemController {
 	@Autowired
 	private ProdutoService produtoService;
 	
-	@RequestMapping("/items")
+	@RequestMapping("/api/items")
 	public List<Item> getAllItems() {
 		return itemService.getItems();
 	}
 	
-	@RequestMapping("/items/{idItem}")
+	@RequestMapping("/api/items/{idItem}")
 	public Item getItem(@PathVariable Integer idItem) {
 		return itemService.getItem(idItem);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/items")
+	@RequestMapping(method=RequestMethod.POST, value="/api/items")
 	public void addItem(@RequestBody Item item) {
 		itemService.addItem(item);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/items/{idItem}")
+	@RequestMapping(method=RequestMethod.PUT, value="/api/items/{idItem}")
 	public void updateItem(@RequestBody Item item, @PathVariable Integer idItem) {
 		itemService.updateItem(item);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="/items/{idItem}")
+	@RequestMapping(method=RequestMethod.DELETE,value="/api/items/{idItem}")
 	public void deleteItem(@PathVariable Integer idItem) {
 		itemService.deleteItem(idItem);
 	}
 	
-	@RequestMapping("/itensDoPedido/{idPedido}")
+	@RequestMapping("/api/itensDoPedido/{idPedido}")
 	public List<Item> getAllItensDoPedido(@PathVariable Integer idPedido) {
 		return pedidoService.getPedido(idPedido).getItens();
 	}
 	
-	@RequestMapping("/itemDoPedido/{idItem}")
+	@RequestMapping("/api/itemDoPedido/{idItem}")
 	public Item getItemDoPedido(@PathVariable Integer idItem) {
 		return itemService.getItemDoPedido(idItem);
 	}
 	
-	@RequestMapping("/itensDoProduto/{idProduto}")
+	@RequestMapping("/api/itensDoProduto/{idProduto}")
 	public List<Item> getAllItensDoProduto(@PathVariable Integer idProduto) {
 		return produtoService.getProduto(idProduto).getItens();
 	}
 	
-	@RequestMapping("/itemDoProduto/{idItem}")
+	@RequestMapping("/api/itemDoProduto/{idItem}")
 	public Item getItemDoProduto(@PathVariable Integer idItem) {
 		return itemService.getItemDoProduto(idItem);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/items/{idPedido}")
+	@RequestMapping(method=RequestMethod.POST, value="/api/items/{idPedido}")
 	public void addItemNoPedido(@RequestBody Item item, @PathVariable Integer idPedido) {
 		itemService.addItemNoPedido(idPedido, item);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/items/{idProduto}")
+	@RequestMapping(method=RequestMethod.POST, value="/api/items/{idProduto}")
 	public void addItemNoProduto(@RequestBody Item item, @PathVariable Integer idProduto) {
 		itemService.addItemNoProduto(idProduto, item);
 	}

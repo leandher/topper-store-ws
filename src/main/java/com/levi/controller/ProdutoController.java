@@ -18,27 +18,27 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoService produtoService;
 	
-	@RequestMapping("/produtos")
+	@RequestMapping("/api/produtos")
 	public List<Produto> getAllProdutos() {
 		return produtoService.getProdutos();
 	}
 	
-	@RequestMapping("/produtos/{idProduto}")
+	@RequestMapping("/api/produtos/{idProduto}")
 	public Produto getProduto(@PathVariable Integer idProduto) {
 		return produtoService.getProduto(idProduto);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/produtos")
+	@RequestMapping(method=RequestMethod.POST, value="/api/produtos")
 	public void addProduto(@RequestBody Produto produto) {
 		produtoService.addProduto(produto);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/produtos/{idProduto}")
+	@RequestMapping(method=RequestMethod.PUT, value="/api/produtos/{idProduto}")
 	public void updateProduto(@RequestBody Produto produto, @PathVariable Integer idProduto) {
 		produtoService.updateProduto(produto);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="/produtos/{idProduto}")
+	@RequestMapping(method=RequestMethod.DELETE,value="/api/produtos/{idProduto}")
 	public void deleteProduto(@PathVariable Integer idProduto) {
 		produtoService.deleteProduto(idProduto);
 	}
