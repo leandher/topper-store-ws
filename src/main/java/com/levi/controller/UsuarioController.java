@@ -29,7 +29,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	@RequestMapping(method=RequestMethod.POST, value="/login", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> getLogin(@RequestBody Usuario user) {
 		Usuario usuario = usuarioService.login(user.getEmail(), user.getPassword());
 		
