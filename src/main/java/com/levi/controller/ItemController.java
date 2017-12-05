@@ -5,6 +5,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +23,7 @@ import com.levi.service.ProdutoService;
 
 @Transactional
 @CrossOrigin("*")
+@RequestMapping("/api/items")
 @RestController
 public class ItemController {
 	
@@ -31,57 +36,69 @@ public class ItemController {
 	@Autowired
 	private ProdutoService produtoService;
 	
-	@RequestMapping("/api/items")
+	@RequestMapping(value ="/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Item> getAllItems() {
 		return itemService.getItems();
 	}
 	
-	@RequestMapping("/api/items/{idItem}")
+	@RequestMapping(value = "/{idItem}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Item getItem(@PathVariable Integer idItem) {
 		return itemService.getItem(idItem);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/api/items")
-	public void addItem(@RequestBody Item item) {
-		itemService.addItem(item);
+	@RequestMapping(method=RequestMethod.POST, value="/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Item> addItem(@RequestBody Item item) {
+		try{
+			itemService.addItem(item);	
+			return new ResponseEntity<Item>(item, HttpStatus.OK);
+		} catch(DataIntegrityViolationException e){
+			return new ResponseEntity<Item>(HttpStatus.CONFLICT);
+		}
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/api/items/{idItem}")
-	public void updateItem(@RequestBody Item item, @PathVariable Integer idItem) {
-		itemService.updateItem(item);
+	@RequestMapping(method=RequestMethod.PUT, value="/{idItem}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Item> updateItem(@RequestBody Item item, @PathVariable Integer idItem) {
+		
+		try{
+			itemService.updateItem(item);	
+			return new ResponseEntity<Item>(item, HttpStatus.OK);
+		} catch(DataIntegrityViolationException e){
+			return new ResponseEntity<Item>(HttpStatus.CONFLICT);
+		}
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="/api/items/{idItem}")
-	public void deleteItem(@PathVariable Integer idItem) {
+	@RequestMapping(method=RequestMethod.DELETE,value="/{idItem}")
+	public ResponseEntity<Item> deleteItem(@PathVariable Integer idItem) {
 		itemService.deleteItem(idItem);
+		return new ResponseEntity<Item>(HttpStatus.OK);
 	}
 	
-	@RequestMapping("/api/itensDoPedido/{idPedido}")
+	@RequestMapping("/itensDoPedido/{idPedido}")
 	public List<Item> getAllItensDoPedido(@PathVariable Integer idPedido) {
 		return pedidoService.getPedido(idPedido).getItens();
 	}
 	
-	@RequestMapping("/api/itemDoPedido/{idItem}")
+	@RequestMapping("/itemDoPedido/{idItem}")
 	public Item getItemDoPedido(@PathVariable Integer idItem) {
 		return itemService.getItemDoPedido(idItem);
 	}
 	
-	@RequestMapping("/api/itensDoProduto/{idProduto}")
+	@RequestMapping("/itensDoProduto/{idProduto}")
 	public List<Item> getAllItensDoProduto(@PathVariable Integer idProduto) {
 		return produtoService.getProduto(idProduto).getItens();
 	}
 	
-	@RequestMapping("/api/itemDoProduto/{idItem}")
+	@RequestMapping("/itemDoProduto/{idItem}")
 	public Item getItemDoProduto(@PathVariable Integer idItem) {
 		return itemService.getItemDoProduto(idItem);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/api/items/{idPedido}")
+	@RequestMapping(method=RequestMethod.POST, value="/{idPedido}")
 	public void addItemNoPedido(@RequestBody Item item, @PathVariable Integer idPedido) {
 		itemService.addItemNoPedido(idPedido, item);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/api/items/{idProduto}")
+	@RequestMapping(method=RequestMethod.POST, value="/{idProduto}")
 	public void addItemNoProduto(@RequestBody Item item, @PathVariable Integer idProduto) {
 		itemService.addItemNoProduto(idProduto, item);
 	}

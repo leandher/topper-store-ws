@@ -5,6 +5,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,34 +21,47 @@ import com.levi.service.ProdutoService;
 
 @Transactional
 @CrossOrigin("*")
+@RequestMapping("/api/produtos")
 @RestController
 public class ProdutoController {
 	
 	@Autowired
 	private ProdutoService produtoService;
 	
-	@RequestMapping("/api/produtos")
+	@RequestMapping(value ="/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Produto> getAllProdutos() {
 		return produtoService.getProdutos();
 	}
 	
-	@RequestMapping("/api/produtos/{idProduto}")
+	@RequestMapping(value = "/{idProduto}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Produto getProduto(@PathVariable Integer idProduto) {
 		return produtoService.getProduto(idProduto);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/api/produtos")
-	public void addProduto(@RequestBody Produto produto) {
-		produtoService.addProduto(produto);
+	@RequestMapping(method=RequestMethod.POST, value="/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Produto> addProduto(@RequestBody Produto produto) {
+		try{
+			produtoService.addProduto(produto);	
+			return new ResponseEntity<Produto>(produto, HttpStatus.OK);
+		} catch(DataIntegrityViolationException e){
+			return new ResponseEntity<Produto>(HttpStatus.CONFLICT);
+		}
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/api/produtos/{idProduto}")
-	public void updateProduto(@RequestBody Produto produto, @PathVariable Integer idProduto) {
-		produtoService.updateProduto(produto);
+	@RequestMapping(method=RequestMethod.PUT, value="/{idProduto}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Produto> updateProduto(@RequestBody Produto produto, @PathVariable Integer idProduto) {
+		
+		try{
+			produtoService.updateProduto(produto);	
+			return new ResponseEntity<Produto>(produto, HttpStatus.OK);
+		} catch(DataIntegrityViolationException e){
+			return new ResponseEntity<Produto>(HttpStatus.CONFLICT);
+		}
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE,value="/api/produtos/{idProduto}")
-	public void deleteProduto(@PathVariable Integer idProduto) {
+	@RequestMapping(method=RequestMethod.DELETE,value="/{idProduto}")
+	public ResponseEntity<Produto> deleteProduto(@PathVariable Integer idProduto) {
 		produtoService.deleteProduto(idProduto);
+		return new ResponseEntity<Produto>(HttpStatus.OK);
 	}
 }

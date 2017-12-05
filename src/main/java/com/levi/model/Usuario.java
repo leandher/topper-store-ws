@@ -11,10 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email", "cpf"}))
 public class Usuario extends User {
 
 	@Id
