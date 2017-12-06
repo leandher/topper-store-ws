@@ -2,10 +2,10 @@ package com.levi.controller;
 
 import java.util.List;
 
+import javax.persistence.RollbackException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -56,9 +56,9 @@ public class UsuarioController {
 		try{
 			usuarioService.addUsuario(usuario);	
 			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
-		} catch(DataIntegrityViolationException e){
+		} catch(RollbackException e){
 			return new ResponseEntity<Usuario>(HttpStatus.CONFLICT);
-		}
+		} 
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/{idUsuario}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -67,7 +67,7 @@ public class UsuarioController {
 		try{
 			usuarioService.updateUsuario(usuario);	
 			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
-		} catch(DataIntegrityViolationException e){
+		} catch(RollbackException e){
 			return new ResponseEntity<Usuario>(HttpStatus.CONFLICT);
 		}
 	}
