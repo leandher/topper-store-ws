@@ -8,7 +8,7 @@ import com.levi.model.Pedido;
 
 public interface PedidoRepository extends CrudRepository<Pedido, Integer> {
 
-	 @Query("SELECT pedido FROM Usuario AS u JOIN u.pedidos AS pedido WHERE pedido.idPedido =:idPedido") 
+	 @Query("SELECT p FROM Pedido p JOIN p.usuario u WHERE p.idPedido =:idPedido") 
 	 Pedido findPedidoDoUsuario(@Param("idPedido") Integer idPedido);
 	 
 }

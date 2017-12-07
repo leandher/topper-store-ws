@@ -9,9 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
@@ -43,12 +43,12 @@ public class Usuario extends User {
 	@JoinColumn(name = "endereco")
 	private Endereco endereco;
 
-	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "usuario")
-	private List<Pedido> pedidos;
-
 	@Column(name = "role")
 	private String userRole;
+	
+	@Transient
+	private List<Pedido> pedidos;
+
 
 	public Integer getIdUsuario() {
 		return idUsuario;

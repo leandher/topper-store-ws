@@ -13,8 +13,8 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
 	@Query("SELECT item FROM Pedido AS p JOIN p.itens AS item WHERE item.idItem =:idItem") 
 	Item findItemDoPedido(@Param("idItem") Integer idItem);
 	
-	@Query("SELECT item FROM Produto AS p JOIN p.itens AS item WHERE item.idItem =:idItem") 
-	Item findItemDoProduto(@Param("idItem") Integer idItem);
+/*	@Query("SELECT item FROM Produto AS p JOIN p.itens AS item WHERE item.idItem =:idItem") 
+	Item findItemDoProduto(@Param("idItem") Integer idItem);*/
 	
 	
 }

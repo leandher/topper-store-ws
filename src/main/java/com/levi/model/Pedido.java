@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.levi.auxiliar.Status;
@@ -32,8 +33,12 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
+	@ManyToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
+	
 	@OneToMany(cascade = {CascadeType.ALL})
-	@JoinColumn(name ="pedido")
+	@JoinColumn(name ="id_pedido")
 	private List<Item> itens;
 
 	public Integer getNumero() {
