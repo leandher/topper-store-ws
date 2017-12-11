@@ -54,6 +54,7 @@ public class UsuarioController {
 	@RequestMapping(method = RequestMethod.POST, value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario) {
 		usuario.setUserRole(Role.USER.toString());
+		usuario.setEnabled(true);
 		try {
 			usuarioService.addUsuario(usuario);
 			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
