@@ -12,15 +12,16 @@ import com.levi.model.Produto;
 
 public interface ProdutoRepository extends CrudRepository<Produto, Integer> {
 
-	@Query("SELECT produto.categoria, SUM(item.valorTotal) FROM Pedido AS pedido "
+	@Query("SELECT new com.levi.dto.VendaPorCategoria(produto.categoria, SUM(item.valorTotal)) FROM Pedido AS pedido "
 		  +"JOIN pedido.itens AS item JOIN item.produto AS produto GROUP BY produto.categoria") 
 	List<VendaPorCategoria> calcularVendaPorCategoria();
 	
-	@Query("SELECT produto.nome, SUM(item.valorTotal) FROM Pedido AS pedido JOIN pedido.itens AS item "
+	@Query("SELECT new com.levi.dto.VendaProduto(produto.nome, SUM(item.valorTotal)) FROM Pedido AS pedido JOIN pedido.itens AS item "
 		   +"JOIN item.produto AS produto  GROUP BY produto.nome") 
 	List<VendaProduto> calcularVendaProduto();
 	
-	@Query("SELECT MONTH(pedido.data), YEAR(pedido.data), SUM(item.valorTotal) FROM Pedido AS pedido "
+	@Query("SELECT new com.levi.dto.VendaMensal(MONTH(pedido.data), YEAR(pedido.data), SUM(item.valorTotal)) "
+			+ "FROM Pedido AS pedido "
 		   +"JOIN pedido.itens AS item JOIN item.produto AS produto GROUP BY MONTH(pedido.data), YEAR(pedido.data)") 
 	List<VendaMensal> calcularVendaMensal();
 }
