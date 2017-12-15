@@ -1,6 +1,5 @@
 package com.levi.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idItem;
 	
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name ="id_produto")
 	private Produto produto;
 

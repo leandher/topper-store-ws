@@ -33,7 +33,7 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 	
