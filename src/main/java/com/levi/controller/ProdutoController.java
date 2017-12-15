@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.levi.dto.VendaMensal;
+import com.levi.dto.VendaPorCategoria;
+import com.levi.dto.VendaProduto;
 import com.levi.model.Produto;
 import com.levi.service.ProdutoService;
 
@@ -63,5 +66,20 @@ public class ProdutoController {
 	public ResponseEntity<Produto> deleteProduto(@PathVariable Integer idProduto) {
 		produtoService.deleteProduto(idProduto);
 		return new ResponseEntity<Produto>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value ="/vendaPorCategoria", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<VendaPorCategoria> getVendaPorCategoria() {
+		return produtoService.getVendaPorCategoria();
+	}
+	
+	@RequestMapping(value ="/vendaMensal", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<VendaMensal> getVendaMensal() {
+		return produtoService.getVendaMensal();
+	}
+	
+	@RequestMapping(value ="/vendaProduto", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<VendaProduto> getVendaProduto() {
+		return produtoService.getVendaProduto();
 	}
 }

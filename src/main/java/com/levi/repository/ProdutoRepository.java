@@ -1,5 +1,7 @@
 package com.levi.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -12,13 +14,13 @@ public interface ProdutoRepository extends CrudRepository<Produto, Integer> {
 
 	@Query("SELECT produto.categoria, SUM(item.valorTotal) FROM Pedido AS pedido "
 		  +"JOIN pedido.itens AS item JOIN item.produto AS produto GROUP BY produto.categoria") 
-	VendaPorCategoria calcularVendaPorCategoria();
+	List<VendaPorCategoria> calcularVendaPorCategoria();
 	
 	@Query("SELECT produto.nome, SUM(item.valorTotal) FROM Pedido AS pedido JOIN pedido.itens AS item "
 		   +"JOIN item.produto AS produto  GROUP BY produto.nome") 
-	VendaProduto calcularVendaProduto();
+	List<VendaProduto> calcularVendaProduto();
 	
 	@Query("SELECT MONTH(pedido.data), YEAR(pedido.data), SUM(item.valorTotal) FROM Pedido AS pedido "
 		   +"JOIN pedido.itens AS item JOIN item.produto AS produto GROUP BY MONTH(pedido.data), YEAR(pedido.data)") 
-	VendaMensal calcularVendaMensal();
+	List<VendaMensal> calcularVendaMensal();
 }
